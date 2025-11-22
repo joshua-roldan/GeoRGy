@@ -18,12 +18,26 @@ Key components include:
 Install the required dependencies:
 
 ```bash
-pip install snntorch torch torchvision numpy matplotlib scikit-learn
+pip install -r requirements.txt
+```
+
+Or install individually:
+
+```bash
+pip install tonic matplotlib numpy
 ```
 
 ### Example Command Lines
 
-#### Download and Prepare the SHD Dataset
+#### Download and Visualize SHD Dataset
+
+```bash
+python download_and_visualize_shd.py
+```
+
+This will download the SHD dataset and create raster plots of the first three samples, saving them to the `./data/` folder.
+
+#### Download and Prepare the SHD Dataset (Alternative)
 
 ```bash
 python -m snntorch.datasets.shd --data_path ./data/shd
