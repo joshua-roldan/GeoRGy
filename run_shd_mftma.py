@@ -72,14 +72,14 @@ n_neurons = sensor_size[0]  # Number of neurons/channels (e.g., 700 for SHD)
 def filter_by_labels(dataset, labels_to_include=None, max_samples_per_class=None, max_total_samples=None):
     """
     Filter dataset samples based on their labels, and sort the returned data by ascending label.
-    
+
     Args:
         dataset: Tonic dataset object
         labels_to_include: List of labels to include, or None for all labels.
                           Can also be a range like range(10) for labels 0-9
         max_samples_per_class: Maximum number of samples per class (None = no limit)
         max_total_samples: Maximum total number of samples to return (None = no limit)
-    
+
     Returns:
         filtered_samples: List of filtered samples (events or frames), sorted by label
         filtered_labels: List of corresponding labels (sorted ascending)
@@ -87,30 +87,30 @@ def filter_by_labels(dataset, labels_to_include=None, max_samples_per_class=None
     """
     filtered_pairs = []
     label_counts = {}
-    
+
     # Convert labels_to_include to a set for fast lookup
     if labels_to_include is not None:
         if isinstance(labels_to_include, range):
             labels_to_include = set(labels_to_include)
         else:
             labels_to_include = set(labels_to_include)
-    
+
     for idx in range(len(dataset)):
         sample, label = dataset[idx]
-        
+
         # Check if label should be included
         if labels_to_include is not None and label not in labels_to_include:
             continue
-        
+
         # Check if we've reached max samples per class
         if max_samples_per_class is not None:
             if label_counts.get(label, 0) >= max_samples_per_class:
                 continue
-        
+
         # Add sample
         filtered_pairs.append((sample, label))
         label_counts[label] = label_counts.get(label, 0) + 1
-        
+
         # Check if we've reached max total samples
         if max_total_samples is not None and len(filtered_pairs) >= max_total_samples:
             break
@@ -240,7 +240,7 @@ print("\n5. Running manifold analysis...")
 print("   This may take a few minutes...")
 
 kappa = 0  # No margin
-n_t = 200  
+n_t = 200
 
 print("\n   Analyzing Neural Manifolds...")
 capacity_all, radius_all, dimension_all, correlation_all, K_all = manifold_analysis_corr(
@@ -276,4 +276,3 @@ print(f"   Total Data Dimension (Feature Dimension): {D_feature}")
 
 print("\n" + "=" * 70)
 print("Analysis complete!")
-
